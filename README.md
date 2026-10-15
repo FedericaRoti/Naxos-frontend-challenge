@@ -143,6 +143,8 @@ Nel README (breve), spiega sinteticamente:
 
 Non è richiesta una documentazione lunga: poche righe chiare sono sufficienti.
 
+Se hai utilizzato strumenti di intelligenza artificiale durante lo svolgimento della challenge, indica brevemente nel README quale strumento hai utilizzato e per quali attività.
+
 Assicurati inoltre che il progetto possa essere avviato facilmente seguendo le istruzioni presenti nel README.
 
 ## ⚙️ Stack
