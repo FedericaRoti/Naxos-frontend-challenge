@@ -1,0 +1,211 @@
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.grid > li {
+  min-width: 0;
+}
+
+@media (min-width: 680px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid-featured {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .grid-featured {
+    grid-row: span 2;
+  }
+}
+
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 24px 26px 28px 36px;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 26px;
+  bottom: 26px;
+  width: 4px;
+  border-radius: 4px;
+  background: var(--rail);
+}
+
+.card-added::before {
+  width: 6px;
+  background: var(--accent);
+  box-shadow: 0 0 18px var(--accent);
+}
+
+.card-new {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.card-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--rail);
+}
+
+.card-added .card-dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.card-pin,
+.card-tag {
+  margin-left: auto;
+}
+
+.card-pin + .card-tag {
+  margin-left: 0;
+}
+
+.card-pin {
+  padding: 5px 12px 3px;
+  border-radius: 999px;
+  background: var(--accent-strong);
+  color: #fff;
+  font-size: 17px;
+  letter-spacing: 0.14em;
+}
+
+.card-tag {
+  font-family: var(--font-text);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.card h2,
+.card p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  margin: 0;
+}
+
+.card h2 {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  min-height: 1.9em;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 0.95;
+  letter-spacing: 0.012em;
+  color: var(--text);
+}
+
+.card-rule {
+  width: 72%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--text-muted), transparent);
+}
+
+.card p {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  margin-top: auto;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-soft);
+}
+
+.card-featured {
+  padding: 34px 40px 36px 50px;
+}
+
+.card-featured::before {
+  left: 22px;
+  top: 36px;
+  bottom: 36px;
+}
+
+.card-featured h2 {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  min-height: 0;
+  font-size: clamp(48px, 6vw, 76px);
+  line-height: 0.9;
+}
+
+.card-featured p {
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  max-width: 80%;
+  font-size: 23px;
+}
+
+.card-watermark {
+  position: absolute;
+  right: -6px;
+  bottom: -44px;
+  font-family: var(--font-display);
+  font-size: 260px;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--text) 32%, transparent);
+  pointer-events: none;
+}
+
+.skeleton {
+  min-height: 240px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: transform 0.25s ease;
+  }
+
+  .card:not(.skeleton):hover {
+    transform: translateY(-4px);
+  }
+
+  .skeleton {
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
