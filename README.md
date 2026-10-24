@@ -1,202 +1,66 @@
-# Naxos Frontend Challenge
+# Catalogo
 
-## 🎯 Obiettivo
+Una piccola interfaccia per gestire un catalogo di contenuti, fatta per la challenge frontend di Naxos. I dati arrivano da [jsonplaceholder](https://jsonplaceholder.typicode.com/posts): cento post con titolo e testo, senza immagini.
 
-Questa challenge serve per valutare il tuo livello come frontend developer.
+## Prima di iniziare
 
-Non è un test da "passare", ma uno strumento per osservare:
+**Da dove parto.** Prima voglio capire chi userà la pagina e che aspetto avrà. Poi carico i dati, pensando a cosa vede chi aspetta e a cosa succede se qualcosa va storto. Alla fine aggiungo form, ricerca e ordinamento.
 
-- **come affronti un problema;**
-- **come prendi decisioni;**
-- **come strutturi una soluzione.**
+**Cosa conta di più.** Che sia facile leggere, aggiungere e ritrovare una voce, e che ogni errore spieghi cosa è successo. Preferisco poche funzioni curate.
 
-Non esiste una soluzione giusta: esistono scelte diverse, e ci interessa capire come arrivi alle tue.
+**I miei dubbi.** Il testo non dice chi usa l'interfaccia: immagino chi gestisce un catalogo di contenuti. Il POST di jsonplaceholder non salva davvero, quindi le voci nuove le tengo in locale. E i testi dei post sono lunghi, quindi in lista li taglio.
 
-A differenza di molte challenge tecniche, non troverai istruzioni passo-passo.
+## Come avviarlo
 
-L'obiettivo è osservare come ti muovi in uno scenario reale, dove non tutto è definito.
+Serve Node.js (l'ho provato con la versione 24).
 
-## ⚙️ Contesto
+```bash
+npm install
+npm run dev
+```
 
-Stai lavorando su una piccola feature di un prodotto che gestisce contenuti.
+Poi apri l'indirizzo che compare nel terminale, di solito `http://localhost:5173`.
 
-Hai accesso a un'API pubblica, ma:
+## Cosa ho fatto e perché
 
-- alcuni aspetti non sono completamente definiti;
-- non tutto è specificato nel dettaglio.
+La prima domanda che mi sono fatta è stata: chi usa questa pagina? Il testo della challenge non lo dice. Ho deciso che è chi gestisce il catalogo, non chi lo sfoglia, e da lì sono venute quasi tutte le altre scelte.
 
-Come in un contesto reale, dovrai gestire ambiguità e prendere decisioni.
+Chi gestisce passa più tempo a cercare e controllare che ad aggiungere. Per questo la lista è la prima cosa che si vede e il form per una nuova voce resta chiuso finché non lo apri. Ricerca, ordinamento e il filtro tra le voci aggiunte da me e quelle dell'archivio servono a ritrovare le cose in fretta. Le voci arrivano dodici alla volta, così la pagina non diventa un muro di cento card.
 
-## 🧠 Approccio richiesto
+Nei dati c'è solo testo, quindi ho puntato su tipografia e profondità: titoli in Bebas Neue, testo in Cormorant Garamond, card in vetro su uno sfondo bordeaux. L'arancio compare solo dove c'è un'azione o una voce aggiunta da me.
 
-Non è necessario completare tutto.
+Per gli errori mi sono messa nei panni di chi aspetta. Mentre i dati caricano vedi dei segnaposto. Se l'API non risponde, risponde con un errore o ci mette più di dieci secondi, compare un avviso con "Riprova". Nel form, se un campo è vuoto, il messaggio compare sotto quel campo e il cursore ci si sposta.
 
-È più importante:
+Il POST di jsonplaceholder non salva niente, quindi le voci nuove restano nel browser e ci sono ancora dopo il refresh.
 
-- capire cosa fare;
-- decidere cosa non fare;
-- motivare le scelte.
+## Cosa non ho fatto e perché
 
-Se qualcosa non è chiaro, puoi fare delle assunzioni: esplicitarle è parte della valutazione.
+- **Una vista di dettaglio.** Titolo e testo sono tagliati per tenere la griglia ordinata, e il testo intero si legge solo passando il mouse sopra. È la prima cosa che aggiungerei.
+- **Modifica e cancellazione.** La challenge chiede di aggiungere, e ho preferito curare bene quella parte.
+- **Un filtro per autore.** L'API ha uno `userId`, ma per chi gestisce il catalogo non è un'informazione utile.
+- **Test automatici.** Ho provato tutto a mano nel browser, compresi un'API lenta, una che risponde con un errore e una che non risponde mai, con un piccolo server di prova.
+- **Una paginazione numerata.** Con cento voci "Mostra altre 12" basta.
 
-La capacità di prioritizzare e gestire le ambiguità è parte centrale della challenge.
+## Compromessi
 
-## 📌 Minimo atteso (per orientarti)
+- Le voci aggiunte vivono solo in questo browser. Se svuoti i dati del sito spariscono, e se il salvataggio non riesce l'app non te lo dice.
+- Il testo intero nel tooltip non si vede da telefono.
+- I dieci secondi di attesa sono una scelta mia: su una rete molto lenta potrei interrompere una risposta che stava arrivando.
+- Ho scurito il vetro più di quanto avrei voluto, perché sotto le zone di luce dello sfondo il testo non si leggeva abbastanza. Ho misurato il contrasto finché non è stato sopra la soglia ovunque.
+- Sui browser che non supportano l'effetto vetro le card diventano scure e piene: restano leggibili, ma perdono la trasparenza.
+- I caratteri arrivano da Google Fonts: senza connessione si vedono quelli di sistema.
 
-Se non sai da dove partire, una soluzione base potrebbe includere:
+## Con più tempo
 
-- visualizzazione dei post;
-- gestione del loading;
-- gestione degli errori;
-- aggiunta di un nuovo post tramite form.
+- Una vista di dettaglio per leggere il testo intero, anche da telefono.
+- Test automatici per ricerca, ordinamento, filtro e form.
+- Modifica e cancellazione delle voci.
+- Una prova su Firefox e con un lettore di schermo. Finora l'ho controllato su Safari e su un browser basato su Chrome.
 
-Il resto è a tua discrezione.
+## Uso dell'AI
 
-## 🚀 Come partecipare
+Ho usato Claude Code (Anthropic). Ha scritto il codice seguendo le mie indicazioni, lo ha provato nel browser e ha fatto una review, comprese le misure del contrasto. Le decisioni sono mie: chi è l'utente, React con Vite, la direzione grafica, come si comporta il form e cosa lasciare fuori.
 
-1. Crea un fork del repository.
-2. Lavora sulla tua copia.
-3. Completa la challenge.
-4. Invia il link alla tua repository GitHub.
+## Tempo
 
-## 🧪 Task
-
-### 1. Dati da API
-
-Recupera i dati da:
-
-https://jsonplaceholder.typicode.com/posts
-
-### 2. Visualizzazione
-
-Mostra i dati nel modo che ritieni più utile.
-
-Puoi scegliere liberamente:
-
-- struttura (lista, card, ecc.);
-- organizzazione;
-- eventuale paginazione o raggruppamento.
-
-### 3. Aggiunta contenuti
-
-Permetti all'utente di aggiungere un nuovo post tramite un form.
-
-Puoi:
-
-- simulare la richiesta POST;
-- oppure gestire i dati localmente.
-
-### 4. Gestione stato
-
-Gestisci:
-
-- loading durante il recupero dei dati;
-- errori (ad esempio API non disponibile).
-
-### 5. Validazione
-
-Il form deve gestire:
-
-- input vuoti;
-- feedback chiari all'utente.
-
-### 6. Comportamento extra (facoltativo)
-
-Implementa almeno una tra queste funzionalità:
-
-- filtro o ricerca dei post;
-- ordinamento;
-- gestione di molti elementi (UX/performance).
-
-Scegli tu quale abbia più senso.
-
-## 📌 Nota importante
-
-Non conta solo che le funzionalità siano presenti.
-
-Verrà valutato anche come vengono integrate nell'esperienza complessiva dell'applicazione, considerando:
-
-- **chiarezza del flusso;**
-- **usabilità delle interazioni;**
-- **coerenza dell'esperienza finale.**
-
-Una soluzione tecnicamente funzionante ma poco rifinita dal punto di vista della UX sarà quindi valutata di conseguenza.
-
-## 🧠 Prima di iniziare (importante)
-
-Scrivi brevemente (3–5 righe):
-
-- cosa faresti per primo;
-- cosa ritieni più importante;
-- eventuali dubbi o ambiguità.
-
-Non serve essere esaustivi: ci interessa il tuo processo di ragionamento.
-
-**Per primo:** fisso la direzione grafica e chi è l'utente, poi carico i dati dall'API con loading ed errore, poi form, ricerca e ordinamento.
-
-**Più importante:** un flusso chiaro per leggere, aggiungere e ritrovare una voce, e stati di errore e validazione che spiegano cosa succede. Preferisco meno funzioni, ma rifinite.
-
-**Dubbi e assunzioni:** il testo non dice chi usa l'interfaccia; assumo chi gestisce un catalogo di contenuti. Il POST di jsonplaceholder è finto, quindi l'aggiunta resta in locale. I testi dei post sono lunghi, quindi in lista li tronco.
-
-## 🧠 README finale
-
-Nel README (breve), spiega sinteticamente:
-
-- **cosa hai deciso di fare e perché;**
-- **cosa non hai fatto e perché;**
-- **eventuali compromessi;**
-- **cosa miglioreresti con più tempo.**
-
-Non è richiesta una documentazione lunga: poche righe chiare sono sufficienti.
-
-Se hai utilizzato strumenti di intelligenza artificiale durante lo svolgimento della challenge, indica brevemente nel README quale strumento hai utilizzato e per quali attività.
-
-Assicurati inoltre che il progetto possa essere avviato facilmente seguendo le istruzioni presenti nel README.
-
-## ⚙️ Stack
-
-Puoi utilizzare qualsiasi tecnologia frontend con cui ti senti a tuo agio.
-
-Puoi scegliere liberamente:
-
-- linguaggio;
-- framework;
-- librerie.
-
-La valutazione non si basa sulla tecnologia scelta, ma su come affronti il problema e sulle decisioni che prendi.
-
-## ⏱️ Tempo
-
-Tempo stimato per una soluzione base funzionante: **60–90 minuti**.
-
-È normale dedicare più tempo per rifinire ulteriormente UX, struttura o dettagli implementativi.
-
-Non è necessario completare tutto perfettamente.
-
-## 📦 Output
-
-Invia:
-
-- il link alla repository GitHub;
-- il codice funzionante.
-
-## 🧠 Valutazione
-
-Riceverai un feedback strutturato su:
-
-- **API Handling**
-- **State Management**
-- **Form & Validation**
-- **Code Quality**
-- **UX**
-- **Thinking**
-
-La valutazione tiene conto sia dell'esecuzione tecnica sia del modo in cui prendi decisioni.
-
-## 💬 Feedback
-
-Dopo la challenge potrai lasciare un feedback su:
-
-- difficoltà;
-- chiarezza;
-- realismo rispetto a un colloquio frontend.
+Circa 60–70 minuti di lavoro effettivo sulla repo, distribuiti in una giornata con delle pause. La direzione grafica e le scelte iniziali le ho definite prima, in più sessioni.
