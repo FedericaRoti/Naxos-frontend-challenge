@@ -2,6 +2,12 @@
 
 Una piccola interfaccia per gestire un catalogo di contenuti, fatta per la challenge frontend di Naxos. I dati arrivano da [jsonplaceholder](https://jsonplaceholder.typicode.com/posts): cento post con titolo e testo, senza immagini.
 
+![La lista del catalogo](docs/screenshots/lista.jpg)
+
+| Form con i campi vuoti | API non disponibile | Da telefono |
+|---|---|---|
+| ![Form con i messaggi di errore](docs/screenshots/form-errori.jpg) | ![Avviso con Riprova](docs/screenshots/errore-api.jpg) | ![Versione mobile](docs/screenshots/mobile.jpg) |
+
 ## Prima di iniziare
 
 **Da dove parto.** Prima voglio capire chi userà la pagina e che aspetto avrà. Poi carico i dati, pensando a cosa vede chi aspetta e a cosa succede se qualcosa va storto. Alla fine aggiungo form, ricerca e ordinamento.
