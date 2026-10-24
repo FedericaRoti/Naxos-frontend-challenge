@@ -132,6 +132,12 @@ Scrivi brevemente (3–5 righe):
 
 Non serve essere esaustivi: ci interessa il tuo processo di ragionamento.
 
+**Per primo:** fisso la direzione grafica e chi è l'utente, poi carico i dati dall'API con loading ed errore, poi form, ricerca e ordinamento.
+
+**Più importante:** un flusso chiaro per leggere, aggiungere e ritrovare una voce, e stati di errore e validazione che spiegano cosa succede. Preferisco meno funzioni, ma rifinite.
+
+**Dubbi e assunzioni:** il testo non dice chi usa l'interfaccia; assumo chi gestisce un catalogo di contenuti. Il POST di jsonplaceholder è finto, quindi l'aggiunta resta in locale. I testi dei post sono lunghi, quindi in lista li tronco.
+
 ## 🧠 README finale
 
 Nel README (breve), spiega sinteticamente:
