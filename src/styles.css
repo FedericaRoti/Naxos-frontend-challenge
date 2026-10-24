@@ -9,10 +9,10 @@
   --text-soft: #edd8cc;
   --text-muted: #d9b3a3;
   --rail: #c98f7c;
-  --danger: #ffb3a0;
+  --danger: #ffc6b8;
   --glass: rgba(255, 236, 228, 0.16);
   --glass-low: rgba(255, 236, 228, 0.03);
-  --glass-veil: rgba(32, 10, 14, 0.3);
+  --glass-veil: rgba(32, 10, 14, 0.4);
   --field: rgba(20, 6, 8, 0.36);
   --shadow: rgba(0, 0, 0, 0.5);
   --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
@@ -95,8 +95,8 @@ body {
 .glass {
   position: relative;
   background: linear-gradient(135deg, var(--glass), var(--glass-low)), var(--glass-veil);
-  backdrop-filter: blur(24px) saturate(1.4) brightness(0.62);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4) brightness(0.62);
+  backdrop-filter: blur(24px) saturate(1.4) brightness(0.45);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4) brightness(0.45);
   box-shadow:
     0 34px 60px -22px var(--shadow),
     0 12px 22px rgba(0, 0, 0, 0.18),
@@ -148,7 +148,8 @@ body {
   font-family: var(--font-display);
   font-size: 20px;
   letter-spacing: 0.18em;
-  color: var(--text-muted);
+  color: var(--text-soft);
+  text-shadow: 0 1px 8px rgba(20, 6, 8, 0.6);
 }
 
 .kicker-dot {
