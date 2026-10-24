@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 const API_URL = 'https://jsonplaceholder.typicode.com/posts'
 const STORAGE_KEY = 'catalogo.addedPosts'
 const FIRST_ADDED_ID = 101
+const REQUEST_TIMEOUT_MS = 10000
 
 function isPost(value) {
   return (
@@ -41,6 +42,11 @@ export function usePosts() {
 
   useEffect(() => {
     const controller = new AbortController()
+    let timedOut = false
+    const timer = setTimeout(() => {
+      timedOut = true
+      controller.abort()
+    }, REQUEST_TIMEOUT_MS)
     setStatus('loading')
 
     fetch(API_URL, { signal: controller.signal })
@@ -54,10 +60,14 @@ export function usePosts() {
         setStatus('ready')
       })
       .catch((error) => {
-        if (error.name !== 'AbortError') setStatus('error')
+        if (timedOut || error.name !== 'AbortError') setStatus('error')
       })
+      .finally(() => clearTimeout(timer))
 
-    return () => controller.abort()
+    return () => {
+      clearTimeout(timer)
+      controller.abort()
+    }
   }, [attempt])
 
   const retry = useCallback(() => setAttempt((n) => n + 1), [])
