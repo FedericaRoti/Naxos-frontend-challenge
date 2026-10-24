@@ -63,9 +63,10 @@ export function usePosts() {
   const retry = useCallback(() => setAttempt((n) => n + 1), [])
 
   const addPost = (title, body) => {
-    const id = Math.max(FIRST_ADDED_ID - 1, ...added.map((post) => post.id)) + 1
+    const current = loadAdded()
+    const id = Math.max(FIRST_ADDED_ID - 1, ...current.map((post) => post.id)) + 1
     const post = { id, title, body }
-    const next = [post, ...added]
+    const next = [post, ...current]
     setAdded(next)
     saveAdded(next)
     return post

@@ -19,8 +19,11 @@ export default function App() {
   const [sort, setSort] = useState('new')
   const [source, setSource] = useState('all')
   const [limit, setLimit] = useState(PAGE_SIZE)
+  const [focusIndex, setFocusIndex] = useState(null)
   const addButtonRef = useRef(null)
   const searchRef = useRef(null)
+  const mainRef = useRef(null)
+  const listRef = useRef(null)
 
   const matchingPosts = useMemo(
     () => sortPosts(filterPosts(filterBySource(posts, source), query), sort),
@@ -34,6 +37,17 @@ export default function App() {
     const timer = setTimeout(() => setHighlightId(null), 2200)
     return () => clearTimeout(timer)
   }, [highlightId])
+
+  useEffect(() => {
+    if (focusIndex === null) return
+    listRef.current?.children[focusIndex]?.focus()
+    setFocusIndex(null)
+  }, [focusIndex])
+
+  function showMore() {
+    setFocusIndex(limit)
+    setLimit(limit + PAGE_SIZE)
+  }
 
   function changeQuery(value) {
     setQuery(value)
@@ -52,7 +66,13 @@ export default function App() {
 
   function closeForm() {
     setFormOpen(false)
-    addButtonRef.current.focus()
+    const button = addButtonRef.current
+    ;(button.disabled ? mainRef.current : button).focus()
+  }
+
+  function openForm() {
+    if (formOpen) document.getElementById('post-title')?.focus()
+    else setFormOpen(true)
   }
 
   function handleAdd(title, body) {
@@ -114,16 +134,20 @@ export default function App() {
 
         {formOpen && <PostForm onSubmit={handleAdd} onCancel={closeForm} />}
 
-        <main>
+        <main ref={mainRef} tabIndex={-1}>
           {loading && <LoadingGrid />}
           {status === 'error' && <ErrorNotice onRetry={retry} />}
 
           {!loading && shownPosts.length > 0 && (
-            <ul className="grid">
+            <ul className="grid" ref={listRef}>
               {shownPosts.map((post, index) => {
                 const featured = index === 0 && shownPosts.length > 2
                 return (
-                  <li key={post.id} className={featured ? 'grid-featured' : undefined}>
+                  <li
+                    key={post.id}
+                    tabIndex={-1}
+                    className={featured ? 'grid-featured' : undefined}
+                  >
                     <PostCard post={post} featured={featured} isNew={post.id === highlightId} />
                   </li>
                 )
@@ -136,7 +160,7 @@ export default function App() {
               <button
                 type="button"
                 className="btn btn-glass"
-                onClick={() => setLimit((current) => current + PAGE_SIZE)}
+                onClick={showMore}
               >
                 Mostra altre {Math.min(PAGE_SIZE, remaining)}
               </button>
@@ -158,11 +182,11 @@ export default function App() {
             />
           )}
 
-          {!loading && hasPosts && matchingPosts.length === 0 && !query.trim() && (
+          {!loading && hasPosts && matchingPosts.length === 0 && !query.trim() && source === 'added' && (
             <EmptyState
               title="Non hai ancora aggiunto voci"
               actionLabel="Aggiungi una voce"
-              onAction={() => setFormOpen(true)}
+              onAction={openForm}
             />
           )}
         </main>
